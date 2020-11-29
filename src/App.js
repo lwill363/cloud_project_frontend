@@ -1,5 +1,4 @@
 import './App.css';
-import configData from './config.json';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
@@ -28,7 +27,7 @@ const Convert = ({ watch, register, required }) => {
       <select name="service_type" ref={register({ required })}>
         <option value="speed">Speed</option>
         <option value="weight">Weight</option>
-        <option value="tempatures">Tempature</option>
+        <option value="temperature">Temperature</option>
       </select>
       <input type="number" name="measurement_value" ref={register({ required })}></input>
       {watchType === "speed" && <select name="from_measurement" ref={register({ required })}>
@@ -49,11 +48,11 @@ const Convert = ({ watch, register, required }) => {
         <option value="lbs">lbs</option>
       </select>
       }
-      {watchType === "tempatures" && <select name="from_measurement" ref={register({ required })}>
+      {watchType === "temperature" && <select name="from_measurement" ref={register({ required })}>
         <option value="fahrenheit">fahrenheit</option>
         <option value="celsius">celsius</option>
       </select>}
-      {watchType === "tempatures" && <select name="to_measurement" ref={register({ required })}>
+      {watchType === "temperature" && <select name="to_measurement" ref={register({ required })}>
         <option value="celsius">celsius</option>
         <option value="fahrenheit">fahrenheit</option>
       </select>
@@ -67,52 +66,34 @@ const Convert = ({ watch, register, required }) => {
 const App = () => {
 
   const { register, watch, handleSubmit } = useForm();
+  const [convert, setConvert] = useState([]);
   const onSubmit = data => {
 
-    // const requestOptions = {
-    //   method: 'POST',
-    //   headers: { "x-api-key": "bdkdbd-dbdkdkbd-kssz" },
-    //   body: JSON.stringify(data),
-    //   redirect: 'follow'
-    // };
-
-    // const headers = {
-    //   'x-api-key': 'bdkdbd-dbdkdkbd-kssz',
-    // }
-
-    // console.log(requestOptions)
-
-    // fetch("http://127.0.0.1:3533/convert", { requestOptions })
-    //   .then(response => response.text())
-    //   .then(result => console.log(result))
-    //   .catch(error => console.log('error', error));
-
-    // axios.post('http://127.0.0.1:3533/convert', data, { headers })
-    //   .then(response => response.text())
-    //   .then(result => console.log(result))
-    //   .catch(error => console.log('error', error))
+    var newData = new FormData();
+    newData.append("service_type", data.service_type)
+    newData.append('from_measurement', data.from_measurement);
+    newData.append('to_measurement', data.to_measurement);
+    newData.append('measurement_value', data.measurement_value);
 
     var config = {
       method: 'post',
       url: 'http://127.0.0.1:3533/convert',
       headers: {
         'x-api-key': 'bdkdbd-dbdkdkbd-kssz',
+        'Content-Type': 'application/json',
       },
-      data: JSON.stringify(data)
+      data: newData
     };
 
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
+        setConvert(JSON.stringify(response.data));
       })
       .catch(function (error) {
         console.log(error);
       });
-
   };
-
-
-
 
 
 
@@ -128,7 +109,7 @@ const App = () => {
           </form>
         </div>
         <div className="apiOutput">
-
+          {convert}
         </div>
       </div>
     </div>

@@ -23,9 +23,12 @@
 
 .ConvertSection {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  text-align: center;
 }
 
-.userInput {
-  text-align: center;
+.userInput {}
+
+.apiOutput {
+  margin-top: 1rem;
 }
