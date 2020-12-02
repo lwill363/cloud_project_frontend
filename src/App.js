@@ -160,9 +160,12 @@ const App = () => {
 
     axios(getConvert)
       .then(function (response) {
-        console.log(JSON.stringify(response.data));
         console.log(response.data.conversions);
-        setPassConversions(JSON.stringify(response.data.conversions));
+        setPassConversions(response.data.conversions.map((pass, i) => {
+          return (
+            <AllConversions pass={pass} i={i} />
+          )
+        }));
       })
       .catch(function (error) {
         console.log(error);
@@ -201,14 +204,7 @@ const App = () => {
         }
       </div>
       <div>
-        {/* {passConversions.conversions.map((pass, i) => {
-          return (
-            <AllConversions pass={pass} i={i} />
-          )
-        })} */}
-
         {passConversions}
-        {/* <AllConversions p={passConversions} /> */}
       </div>
 
     </div>
