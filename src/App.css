@@ -1,4 +1,5 @@
 .App {
+  padding: 5px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -6,9 +7,16 @@
 }
 
 
-.Header {
+/* .Header {
   width: 50%;
   text-align: center;
+} */
+
+.flex-this {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .large {
@@ -16,10 +24,6 @@
   text-decoration: underline;
 }
 
-.mute {
-  font-size: 1em;
-  color: darkgray;
-}
 
 .ConvertSection {
   display: flex;
@@ -27,8 +31,17 @@
   text-align: center;
 }
 
-.userInput {}
+.move-center {
+  margin-left: 8rem;
+}
 
 .apiOutput {
   margin-top: 1rem;
+}
+
+
+@media only screen and (max-width: 600px) {
+  .move-center {
+    margin-left: 0;
+  }
 }
